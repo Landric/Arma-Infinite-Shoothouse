@@ -1,0 +1,156 @@
+author			= "Landric";
+onLoadName		= "Landric's Infinite Shoothouse";
+onLoadMission	= "Hone your skills in room-clearing and CQB, in an infinitely expanding shoothouse";
+loadScreen 		= "shoot_loading.jpg";
+
+class CfgFunctions
+{
+	class LND
+	{
+		class Rooms 
+		{
+			class createInterior {};
+			class createLoot {};
+			class createRoom {};
+			class createWalls {};
+		};
+		class Utils
+		{
+			class clearInventory {};
+			class getAllNeighbours {};
+			class getOrthogonalNeighbours {};
+			class hasNeighbours {};
+		};
+	};
+};
+
+
+class Params
+{
+	class Daytime
+	{
+		title = "Time of day";
+		texts[] = {"Day","Night"};
+		values[] = {12,0};
+		default = 12;
+		function = "BIS_fnc_paramDaytime";
+	};
+
+	class PlayerDamage
+	{
+		title = "Damage to players";
+		texts[] = {"Full", "Slightly Reduced", "Greatly Reduced", "Disabled"};
+		values[] = {100, 75, 25, 0};
+		default = 75;
+	};
+
+	class NVGs
+	{
+		title = "Starting NVGs";
+		texts[] = {"Enabled", "Disabled"};
+		values[] = {1, 0};
+		default = 0;
+	};
+
+	class StartingWeapon
+	{
+		title = "Starting primary weapon";
+		texts[] = {"None", "ADR-97C", "Vector SMG", "MP5K", "MXC", "AK-12", "CAR-95", "Kozlice 12G", "Random"};
+		values[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+		default = 4;
+	};
+
+	class StartingPistol
+	{
+		title = "Starting pistol";
+		texts[] = {"None", "P99", "4-five", "Chiappa Rhino", "Random"};
+		values[] = {0, 1, 2, 3, 4};
+		default = 1;
+	};
+
+	class StartingLoot
+	{
+		title = "Guaranteed starting loot";
+		texts[] = {"Enabled", "Disabled"};
+		values[] = {1, 0};
+		default = 1;
+	};
+
+	class LootChance
+	{
+		title = "Discoverable loot chance";
+		texts[] = {"0%", "5%", "10%", "20%"};
+		values[] = {0, 5, 10, 20};
+		default = 5;
+	};
+
+	class Rifles
+	{
+		title = "Discoverable weapons: Rifles";
+		texts[] = {"Enabled", "Disabled"};
+		values[] = {1, 0};
+		default = 1;
+	};
+
+	class Smgs
+	{
+		title = "Discoverable weapons: SMGs";
+		texts[] = {"Enabled", "Disabled"};
+		values[] = {1, 0};
+		default = 1;
+	};
+
+	class Pistols
+	{
+		title = "Discoverable weapons: Pistols";
+		texts[] = {"Enabled", "Disabled"};
+		values[] = {1, 0};
+		default = 1;
+	};
+
+	class OPF
+	{
+		title = "Hostiles";
+		texts[] = {"Looters", "FIA", "AAF", "CSAT", "Random (All)"};
+		values[] = {0, 1, 2, 3, 4};
+		default = 3;
+	};
+
+	class Hostages
+	{
+		title = "Hostages";
+		texts[] = {"Enabled (HI-VIS)", "Enabled", "Disabled"};
+		values[] = {2, 1, 0};
+		default = 1;
+	};
+
+	class BLUF
+	{
+		title = "BLUFOR";
+		texts[] = {"Enabled", "Disabled"};
+		values[] = {1, 0};
+		default = 0;
+	};
+
+	class NonHostileChance
+	{
+		title = "Non-hostile unit chance";
+		texts[] = {"0%", "5%", "10%", "20%"};
+		values[] = {0, 5, 10, 20};
+		default = 5;
+	};
+
+	class MinUnits
+	{
+		title = "Minimum units per room";
+		values[] = {0, 1, 2, 3};
+		default = 1;
+	};
+
+	class MaxUnits
+	{
+		title = "Maximum units per room";
+		values[] = {1, 2, 3, 4, 5, 6};
+		default = 4;
+	};
+};

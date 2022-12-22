@@ -97,17 +97,19 @@ private _compatibleAmmo = [];
 
 // Create attachments, ammo, supply boxes, etc.
 {
-	_objType = selectRandom (_x select 0);
-	_pos = _x select 1;
+	private _objType = selectRandom (_x select 0);
+	private _pos = _x select 1;
 	_pos = [(_pos select 0)+(LND_shoot_roomSize * _roomX), (_pos select 1)+(LND_shoot_roomSize * _roomY), (_pos select 2)];
-	_dir = _x select 2;
-	_obj = objNull;
+	private _dir = _x select 2;
+	private _obj = objNull;
 	switch (_objType) do { 
 		case "ATTACHMENT" : {
-			_objType = "Item_" + (selectRandom _compatibleAttachments);
-			_obj = _objType createVehicle _pos;
-			_obj setDir _dir;
-			_obj setPos _pos;
+			if((count _compatibleAttachments) > 0) then {
+				_objType = "Item_" + (selectRandom _compatibleAttachments);
+				_obj = _objType createVehicle _pos;
+				_obj setDir _dir;
+				_obj setPos _pos;
+			};
 		};
 		case "GRENADE_BOX" : {
 			_objType = "Box_NATO_AmmoOrd_F";
@@ -156,7 +158,7 @@ private _compatibleAmmo = [];
 		};
 		default { continue };
 	};
-	_allObjects pushBack _obj;
+	if(!(_obj isEqualTo objNull)) then { _allObjects pushBack _obj; };
 
 } forEach (_room select 1);
 

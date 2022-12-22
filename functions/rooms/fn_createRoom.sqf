@@ -18,10 +18,9 @@ scriptName "LND\functions\rooms\fn_createRoom.sqf";
 */
 params ["_roomX", "_roomY", ["_genUnits", true, [true]], ["_forceLoot", false, [true]]];
 
-private _allObjects = [];
-
 private _wallsAndDoors = ([_roomX, _roomY] call LND_fnc_createWalls);
-private _allObjects append (_wallsAndDoors select 0);
+private _allObjects = [];
+_allObjects append (_wallsAndDoors select 0);
 private _doors = (_wallsAndDoors select 1);
 
 // Percentage chance of a room containing "loot"

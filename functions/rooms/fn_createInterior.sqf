@@ -34,15 +34,23 @@ private _rotation = selectRandom [0, 90, 180, 270];
 	_pos = _x select 1;
 	_pos = [
 		(((_pos select 0) * cos(_rotation)) - ((_pos select 1) * sin(_rotation)))+(LND_shoot_roomSize * _roomX),
-		(((_pos select 0) * sin(_rotation)) + ((_pos select 1) * cos(_rotation)))+(LND_shoot_roomSize * _roomY)
+		(((_pos select 0) * sin(_rotation)) + ((_pos select 1) * cos(_rotation)))+(LND_shoot_roomSize * _roomY),
+		(_pos select 2)
 	];
 
 	_dir = (_x select 2) - _rotation;
 
-	_furniture = _type createVehicle _pos;
-	_furniture setDir _dir;
-	_furniture setVehiclePosition [_pos, [], 0, "CAN_COLLIDE"];
-	_furniture enableSimulationGlobal false;
+	private _furniture = _type createVehicle _pos;
+	if((_pos select 2) > 0) then {
+		_furniture enableSimulationGlobal false;
+		_furniture setVehiclePosition [_pos, [], 0, "CAN_COLLIDE"];
+		[_furniture, (_pos select 2)] call BIS_fnc_setHeight;
+		_furniture setDir _dir;
+	} else {
+		_furniture setDir _dir;
+		_furniture setVehiclePosition [_pos, [], 0, "CAN_COLLIDE"];
+		_furniture enableSimulationGlobal false;
+	};
 	_allObjects pushBack _furniture;
 } forEach (_interior select 0);
 
@@ -52,6 +60,37 @@ private _containsHostiles = false; // Track whether we have created any hostile 
 if(_genUnits) then {
 	_unitPositions = (_interior select 1) call BIS_fnc_arrayShuffle;
 	_unitPositions resize ([LND_shoot_minUnits, LND_shoot_maxUnits] call BIS_fnc_randomInt);
+
+
+	// Add units on the "upper" level
+	if( (count _unitPositions) < LND_shoot_maxUnits) then {
+
+		private _perches = +(selectRandom LND_shoot_perches);
+
+		for "_i" from 0 to ([0, LND_shoot_maxUnits-(count _unitPositions)] call BIS_fnc_randomInt) -1 do {
+				
+			private _perch = _perches deleteAt ([0, (count _perches)-1] call BIS_fnc_randomInt);
+			private _perchType = _perch select 0;
+			private _perchPos = _perch select 1;
+			_perchPos = [
+				(((_perchPos select 0) * cos(_rotation)) - ((_perchPos select 1) * sin(_rotation)))+(LND_shoot_roomSize * _roomX),
+				(((_perchPos select 0) * sin(_rotation)) + ((_perchPos select 1) * cos(_rotation)))+(LND_shoot_roomSize * _roomY),
+				(_perchPos select 2)
+			];
+			private _perchDir = (_perch select 2) - _rotation;
+
+			private _furniture = _perchType createVehicle _perchPos;
+			_furniture enableSimulationGlobal false;
+			_furniture setVehiclePosition [_perchPos, [], 0, "CAN_COLLIDE"];
+			[_furniture, (_perchPos select 2)] call BIS_fnc_setHeight;
+			_furniture setDir _perchDir;
+			_allObjects pushBack _furniture;
+
+			if((random 1) < 0.5) then { _unitPositions pushBack [(_perch select 1), ["MIDDLE", "UP"]]; };
+
+		};
+	};
+
 	{
 		private _unit = objNull;
 
@@ -60,10 +99,11 @@ if(_genUnits) then {
 		_pos = _x select 0;
 		_pos = [
 			(((_pos select 0) * cos(_rotation)) - ((_pos select 1) * sin(_rotation)))+(LND_shoot_roomSize * _roomX),
-			(((_pos select 0) * sin(_rotation)) + ((_pos select 1) * cos(_rotation)))+(LND_shoot_roomSize * _roomY)
+			(((_pos select 0) * sin(_rotation)) + ((_pos select 1) * cos(_rotation)))+(LND_shoot_roomSize * _roomY),
+			(_pos select 2)
 		];
 
-		if( (LND_shoot_spawnHostages || LND_shoot_spawnBLUFOR) && (LND_shoot_emptyRooms < 3 || _containsHostiles) && random 1 < ((["NonHostileChance", 5] call BIS_fnc_getParamValue)/100) ) then {
+		if( (LND_shoot_spawnHostages || LND_shoot_spawnBLUFOR) && (LND_shoot_emptyRooms < 3 || _containsHostiles) && (random 1) < ((["NonHostileChance", 10] call BIS_fnc_getParamValue)/100) ) then {
 
 			switch (true) do { 
 				case (LND_shoot_spawnHostages && LND_shoot_spawnBLUFOR && ((random 1) < 0.5));

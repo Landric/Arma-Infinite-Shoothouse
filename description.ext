@@ -135,9 +135,9 @@ class Params
 	class NonHostileChance
 	{
 		title = "Non-hostile unit chance";
-		texts[] = {"0%", "5%", "10%", "20%"};
-		values[] = {0, 5, 10, 20};
-		default = 5;
+		texts[] = {"0%", "5%", "10%", "20%", "30%"};
+		values[] = {0, 5, 10, 20, 30};
+		default = 10;
 	};
 
 	class MinUnits

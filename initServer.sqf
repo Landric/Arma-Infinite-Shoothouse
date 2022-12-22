@@ -1,4 +1,5 @@
 #include "defines\rooms.sqf";
+#include "defines\perches.sqf";
 #include "defines\loot.sqf";
 #include "defines\units.sqf";
 

@@ -39,9 +39,9 @@ private _hasNeighbours = [_roomX, _roomY] call LND_fnc_hasNeighbours;
 private _northWall = [];
 _wallY = (LND_shoot_roomSize * _roomY) + (LND_shoot_roomSize/2);
 for "_x" from -((LND_shoot_roomSize/2)-1) to ((LND_shoot_roomSize/2)-1) step 2 do {
-	_wallX = _x + (LND_shoot_roomSize * _roomX);
+	private _wallX = _x + (LND_shoot_roomSize * _roomX);
 
-	_wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+	private _wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 	//_wall setDir 0;
 	if (random 1 < 0.3) then {
 		_wall setDir 180;		
@@ -50,11 +50,11 @@ for "_x" from -((LND_shoot_roomSize/2)-1) to ((LND_shoot_roomSize/2)-1) step 2 d
 	_wall enableSimulationGlobal false;
 	_northWall pushBack _wall;
 
-	_upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+	private _upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 	_upperWall enableSimulationGlobal false;
 	_upperWall setVehiclePosition [[_wallX, _wallY], [], 0, "CAN_COLLIDE"];
 	[_upperWall, 3.651] call BIS_fnc_setHeight;
-	_dir = 1;
+	private _dir = 1;
 	if (random 1 < 0.3) then {
 		_dir = -1;		
 	};
@@ -68,11 +68,11 @@ _walls pushBack _northWall;
 // "EAST" wall
 private _eastWall = [];
 if(_roomX > 0 || (_roomX == 0 && ( !([_roomX+1,_roomY] in LND_shoot_rooms) || random 1 < 0.8 )))  then {
-	_wallX = (LND_shoot_roomSize * _roomX) + (LND_shoot_roomSize/2);
+	private _wallX = (LND_shoot_roomSize * _roomX) + (LND_shoot_roomSize/2);
 	for "_y" from -((LND_shoot_roomSize/2)-1) to ((LND_shoot_roomSize/2)-1) step 2 do {
-		_wallY = _y + (LND_shoot_roomSize * _roomY);
+		private _wallY = _y + (LND_shoot_roomSize * _roomY);
 		
-		_wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+		private _wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 		_wall setDir 90;
 		if (random 1 < 0.3) then {
 			_wall setDir 270;
@@ -81,11 +81,11 @@ if(_roomX > 0 || (_roomX == 0 && ( !([_roomX+1,_roomY] in LND_shoot_rooms) || ra
 		_wall enableSimulationGlobal false;
 		_eastWall pushBack _wall;
 
-		_upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+		private _upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 		_upperWall enableSimulationGlobal false;
 		_upperWall setVehiclePosition [[_wallX, _wallY], [], 0, "CAN_COLLIDE"];
 		[_upperWall, 3.651] call BIS_fnc_setHeight;
-		_dir = 1;
+		private _dir = 1;
 		if (random 1 < 0.3) then {
 			_dir = -1;		
 		};
@@ -98,11 +98,11 @@ if(_roomX > 0 || (_roomX == 0 && ( !([_roomX+1,_roomY] in LND_shoot_rooms) || ra
 // "SOUTH" wall
 private _southWall = [];
 if(_roomX != 0 || _roomY == 0) then {
-	_wallY = (LND_shoot_roomSize * _roomY) - (LND_shoot_roomSize/2);
+	private _wallY = (LND_shoot_roomSize * _roomY) - (LND_shoot_roomSize/2);
 	for "_x" from -((LND_shoot_roomSize/2)-1) to ((LND_shoot_roomSize/2)-1) step 2 do {
-		_wallX = _x + (LND_shoot_roomSize * _roomX);
+		private _wallX = _x + (LND_shoot_roomSize * _roomX);
 		
-		_wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+		private _wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 		_wall setDir 180;
 		if (random 1 < 0.3) then {
 			_wall setDir 0;		
@@ -111,11 +111,11 @@ if(_roomX != 0 || _roomY == 0) then {
 		_wall enableSimulationGlobal false;
 		_southWall pushBack _wall;
 
-		_upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+		private _upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 		_upperWall enableSimulationGlobal false;
 		_upperWall setVehiclePosition [[_wallX, _wallY], [], 0, "CAN_COLLIDE"];
 		[_upperWall, 3.651] call BIS_fnc_setHeight;
-		_dir = 1;
+		private _dir = 1;
 		if (random 1 < 0.3) then {
 			_dir = -1;		
 		};
@@ -128,11 +128,11 @@ if(_roomX != 0 || _roomY == 0) then {
 // "WEST" wall
 private _westWall = [];
 if(_roomX < 0 || (_roomX == 0 && ( !([_roomX-1,_roomY] in LND_shoot_rooms) || random 1 < 0.8 )))  then {
-	_wallX = (LND_shoot_roomSize * _roomX) - (LND_shoot_roomSize/2);
+	private _wallX = (LND_shoot_roomSize * _roomX) - (LND_shoot_roomSize/2);
 	for "_y" from -((LND_shoot_roomSize/2)-1) to ((LND_shoot_roomSize/2)-1) step 2 do {
-		_wallY = _y + (LND_shoot_roomSize * _roomY);
+		private _wallY = _y + (LND_shoot_roomSize * _roomY);
 		
-		_wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+		private _wall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 		_wall enableSimulationGlobal false;
 		_wall setDir 270;
 		if (random 1 < 0.3) then {
@@ -141,11 +141,11 @@ if(_roomX < 0 || (_roomX == 0 && ( !([_roomX-1,_roomY] in LND_shoot_rooms) || ra
 		_wall setVehiclePosition [[_wallX, _wallY], [], 0, "CAN_COLLIDE"];
 		_westWall pushBack _wall;
 
-		_upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
+		private _upperWall = (selectRandom _wallTypes) createVehicle [_wallX, _wallY];
 		_upperWall enableSimulationGlobal false;
 		_upperWall setVehiclePosition [[_wallX, _wallY], [], 0, "CAN_COLLIDE"];
 		[_upperWall, 3.651] call BIS_fnc_setHeight;
-		_dir = 1;
+		private _dir = 1;
 		if (random 1 < 0.3) then {
 			_dir = -1;		
 		};
@@ -168,14 +168,15 @@ if(_roomX == 0) then{
 		for "_j" from 0 to 2 do {
 
 			// Make it obvious where "locked" doors will spawn
-			_doorType = switch (_i) do { 
+			private _doorType = switch (_i) do { 
 				case 0 : { selectRandom _lockableDoorTypes };
-				case 1 : { selectRandom _doorTypes };
+				default { selectRandom _doorTypes };
 			};
-			_panelNumber = [1, (count _wall)-2] call BIS_fnc_randomInt;
-			_panel = _wall select _panelNumber;
-			_doorPos = getPos _panel;
-			_doorDir = getDir _panel;
+
+			private _panelNumber = [1, (count _wall)-2] call BIS_fnc_randomInt;
+			private _panel = _wall select _panelNumber;
+			private _doorPos = getPos _panel;
+			private _doorDir = getDir _panel;
 
 			// If the door leads to the next room, "lock" it by not
 			// removing the wall covering it
@@ -185,7 +186,8 @@ if(_roomX == 0) then{
 				deleteVehicle _panel;
 			};
 			if(!(_doorType isEqualTo objNull)) then {
-				_door = _doorType createVehicle _doorPos;
+
+				private _door = _doorType createVehicle _doorPos;
 				_door setDir _doorDir;
 				_door setVehiclePosition [_doorPos, [], 0, "CAN_COLLIDE"];
 				_door enableSimulationGlobal false;
@@ -216,14 +218,14 @@ if(_roomX == 0) then{
 	_wallsWithNeighbours deleteAt 0; // Side rooms only (if any)
 	{
 		for "_i" from 0 to 3 do {
-			_windowType = selectRandom _windowTypes;
-			_panelNumber = [1, (count _x)-2] call BIS_fnc_randomInt;
-			_panel = _x select _panelNumber;
-			_windowPos = getPos _panel;
-			_windowDir = getDir _panel;
+			private _windowType = selectRandom _windowTypes;
+			private _panelNumber = [1, (count _x)-2] call BIS_fnc_randomInt;
+			private _panel = _x select _panelNumber;
+			private _windowPos = getPos _panel;
+			private _windowDir = getDir _panel;
 			deleteVehicle _panel;
 
-			_window = _windowType createVehicle _windowPos;
+			private _window = _windowType createVehicle _windowPos;
 			_window setDir _windowDir;
 			_window setVehiclePosition [_windowPos, [], 0, "CAN_COLLIDE"];
 			_window enableSimulationGlobal false;

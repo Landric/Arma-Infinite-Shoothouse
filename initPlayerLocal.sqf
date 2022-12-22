@@ -1,8 +1,7 @@
 
 params ["_player", "_didJIP"];
 
-_player createDiaryRecord ["Diary", ["CQB Training", "Welcome to Close Quarters Battle Training!<br/><br/>Work your way through an infinite shoothouse in order to hone your skills.<br/><br/>Watch out for hostages!"]];
-
+_player createDiaryRecord ["Diary", ["CQB Training", "Welcome to Close Quarters Battle Training - work your way through an infinite shoothouse in order to hone your skills.<br/><br/>Clear each ""main"" room - and any side rooms - to unlock the next room. Search for extra weapons and ammo. Watch out for hostages!<br/><br/>To tweak the Scenario's difficulty (e.g. time of day, resupply availability, etc.) run as a multiplayer game and change the scenario Parameters."]];
 
 _weapon = switch ( ["StartingWeapon", 4] call BIS_fnc_getParamValue ) do { 
 	case 0 : { "" }; 
@@ -93,3 +92,8 @@ _player addEventHandler ["HandleRating", {
 	// (This is a practice scenario after all)
 	0
 }];
+
+
+if(_didJIP && count allPlayers > 1) then {
+	_player setPos getPos (allPlayers select 0);
+};

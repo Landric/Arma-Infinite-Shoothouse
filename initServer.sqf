@@ -17,7 +17,7 @@ LND_shoot_spawnBLUFOR = (["BLUF", 0] call BIS_fnc_getParamValue) > 0;
 
 LND_shoot_rooms = createHashMap; // Store data about created rooms (e.g., existence, objects, etc.)
 
-LND_shoot_score = 0;
+LND_shoot_score = 0; // Score is shared by group, not unique to each player
 
 // Create an initial set of rooms (with no units), and (optionally) "loot"
 [0, 1, false] call LND_fnc_createRoom;

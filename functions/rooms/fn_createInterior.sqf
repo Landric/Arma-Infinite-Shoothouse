@@ -157,7 +157,10 @@ if(_genUnits) then {
 			}
 			else{
 				LND_shoot_score = LND_shoot_score + FRIENDLY_WOUNDED_PENALTY;
-				(format ["Friendly unit injured!\n\n%1 points!\n\nCurrent score: %2", FRIENDLY_WOUNDED_PENALTY, LND_shoot_score]) remoteExec ["hint"];
+				{
+					private _highScore = profileNamespace getVariable ["LND_shoot_highScore", 0];
+					hint parseText (format ["<t size=""1.2"">Friendly unit injured!<br/><br/>%1 points!<br/><br/>Current score: %2<br/><br/>Highscore: %3</t>", FRIENDLY_WOUNDED_PENALTY, LND_shoot_score, _highScore]);
+				} remoteExec ["call"];
 			};
 
 
@@ -190,7 +193,10 @@ if(_genUnits) then {
 				};
 				
 				LND_shoot_score = LND_shoot_score + HOSTILE_KILLED_SCORE;
-				(format ["Hostile neutralised!\n\n+%1 points!\n\nCurrent score: %2", HOSTILE_KILLED_SCORE, LND_shoot_score]) remoteExec ["hint"];
+				{
+					private _highScore = profileNamespace getVariable ["LND_shoot_highScore", 0];
+					hint parseText (format ["<t size=""1.2"">Hostile neutralised!<br/><br/>+%1 points!<br/><br/>Current score: %2<br/><br/>Highscore: %3</t>", HOSTILE_KILLED_SCORE, LND_shoot_score, _highScore]);
+				} remoteExec ["call"];
 			}
 			else{
 				_unit removeWeaponGlobal (primaryWeapon _unit);
@@ -202,7 +208,10 @@ if(_genUnits) then {
 				if((side _killer) != west) exitWith {};
 
 				LND_shoot_score = LND_shoot_score + FRIENDLY_KILLED_PERNALTY;
-				(format ["Friendly unit killed!\n\n%1 points!\n\nCurrent score: %2", FRIENDLY_KILLED_PERNALTY, LND_shoot_score]) remoteExec ["hint"];
+				{
+					private _highScore = profileNamespace getVariable ["LND_shoot_highScore", 0];
+					hint parseText (format ["<t size=""1.2"">Friendly unit killed!<br/><br/>%1 points!<br/><br/>Current score: %2<br/><br/>Highscore: %3</t>", FRIENDLY_KILLED_PERNALTY, LND_shoot_score, _highScore]);
+				} remoteExec ["call"];
 			};
 
 		}];

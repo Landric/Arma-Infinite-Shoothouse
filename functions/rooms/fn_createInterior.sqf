@@ -17,6 +17,10 @@ scriptName "LND\functions\rooms\fn_createInterior.sqf";
 		_objects = [0, 0] call LND_fnc_createInterior;
 */
 
+#define HOSTILE_KILLED_SCORE 10
+#define FRIENDLY_WOUNDED_PENALTY -200
+#define FRIENDLY_KILLED_PERNALTY -200
+
 params ["_roomX", "_roomY", "_genUnits"];
 
 private _allObjects = [];
@@ -154,8 +158,8 @@ if(_genUnits) then {
 				//
 			}
 			else{
-				LND_shoot_score = LND_shoot_score - 1;
-				(format ["Friendly unit injured!\n\n-1 points!\n\nCurrent score: %1", LND_shoot_score]) remoteExec ["hint"];
+				LND_shoot_score = LND_shoot_score + FRIENDLY_WOUNDED_PENALTY;
+				(format ["Friendly unit injured!\n\n%1 points!\n\nCurrent score: %2", FRIENDLY_WOUNDED_PENALTY, LND_shoot_score]) remoteExec ["hint"];
 			};
 
 
@@ -168,12 +172,12 @@ if(_genUnits) then {
 
 			// Don't just check side, as ACE will set uncon units as CIV
 			if((typeOf _unit) in LND_shoot_opf) then {
-				LND_shoot_score = LND_shoot_score + 10;
-				(format ["Hostile neutralised!\n\n+10 points!\n\nCurrent score: %1", LND_shoot_score]) remoteExec ["hint"];
+				LND_shoot_score = LND_shoot_score + HOSTILE_KILLED_SCORE;
+				(format ["Hostile neutralised!\n\n+%1 points!\n\nCurrent score: %2", HOSTILE_KILLED_SCORE, LND_shoot_score]) remoteExec ["hint"];
 			}
 			else{
-				LND_shoot_score = LND_shoot_score - 10;
-				(format ["Friendly unit killed!\n\n-10 points!\n\nCurrent score: %1", LND_shoot_score]) remoteExec ["hint"];
+				LND_shoot_score = LND_shoot_score + FRIENDLY_KILLED_PERNALTY;
+				(format ["Friendly unit killed!\n\n%1 points!\n\nCurrent score: %2", FRIENDLY_KILLED_PERNALTY, LND_shoot_score]) remoteExec ["hint"];
 			};
 
 		}];

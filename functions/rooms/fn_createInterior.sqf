@@ -63,7 +63,11 @@ private _rotation = selectRandom [0, 90, 180, 270];
 private _containsHostiles = false; // Track whether we have created any hostile units
 if(_genUnits) then {
 	_unitPositions = (_interior select 1) call BIS_fnc_arrayShuffle;
-	_unitPositions resize ([LND_shoot_minUnits, LND_shoot_maxUnits] call BIS_fnc_randomInt);
+
+	private "_minUnits";
+	if(LND_shoot_emptyRooms < 2) then { _minUnits = LND_shoot_minUnits; }
+	else { _minUnits = 1; };
+	_unitPositions resize ([_minUnits, LND_shoot_maxUnits] call BIS_fnc_randomInt);
 
 
 	// Add units on the "upper" level
@@ -105,7 +109,7 @@ if(_genUnits) then {
 			(_pos select 2)
 		];
 
-		if( (LND_shoot_spawnHostages || LND_shoot_spawnBLUFOR) && (LND_shoot_emptyRooms < 3 || _containsHostiles) && (random 1) < ((["NonHostileChance", 10] call BIS_fnc_getParamValue)/100) ) then {
+		if( (LND_shoot_spawnHostages || LND_shoot_spawnBLUFOR) && (LND_shoot_emptyRooms < 2 || _containsHostiles) && (random 1) < ((["NonHostileChance", 10] call BIS_fnc_getParamValue)/100) ) then {
 
 			switch (true) do { 
 				case (LND_shoot_spawnHostages && LND_shoot_spawnBLUFOR && ((random 1) < 0.5));
@@ -221,6 +225,10 @@ if(_genUnits) then {
 // Used to prevent too many empty rooms in a row
 if(!_containsHostiles && _roomX == 0) then {
 	LND_shoot_emptyRooms = LND_shoot_emptyRooms + 1;
+};
+
+if(_containsHostiles) then {
+	LND_shoot_emptyRooms = 0;
 };
 
 _allObjects

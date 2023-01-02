@@ -24,7 +24,7 @@ _allObjects append (_wallsAndDoors select 0);
 private _doors = (_wallsAndDoors select 1);
 
 // Percentage chance of a room containing "loot"
-if(_forceLoot || random 1 < LND_shoot_lootChance) then {
+if(_forceLoot || (random 1 < LND_shoot_lootChance && LND_shoot_emptyRooms < 2)) then {
 	_allObjects append ([_roomX, _roomY] call LND_fnc_createLoot);
 }
 else{

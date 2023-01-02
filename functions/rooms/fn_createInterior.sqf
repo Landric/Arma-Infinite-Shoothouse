@@ -71,8 +71,7 @@ if(_genUnits) then {
 
 		private _perches = +(selectRandom LND_shoot_perches);
 
-		for "_i" from 0 to ([0, LND_shoot_maxUnits-(count _unitPositions)] call BIS_fnc_randomInt) -1 do {
-				
+		for "_i" from 0 to ([0, LND_shoot_maxUnits-(count _unitPositions)] call BIS_fnc_randomInt) -1 do {	
 			private _perch = _perches deleteAt ([0, (count _perches)-1] call BIS_fnc_randomInt);
 			private _perchType = _perch select 0;
 			private _perchPos = _perch select 1;
@@ -91,7 +90,6 @@ if(_genUnits) then {
 			_allObjects pushBack _furniture;
 
 			if((random 1) < 0.5) then { _unitPositions pushBack [(_perch select 1), ["MIDDLE", "UP"]]; };
-
 		};
 	};
 
@@ -155,7 +153,7 @@ if(_genUnits) then {
 
 			// Don't just check side, as unconscious/dead units count as CIV
 			if((typeOf _unit) in LND_shoot_opf) then {
-				//
+				//pass
 			}
 			else{
 				LND_shoot_score = LND_shoot_score + FRIENDLY_WOUNDED_PENALTY;
@@ -168,14 +166,41 @@ if(_genUnits) then {
 		_unit addEventHandler ["Killed", {
 			params ["_unit", "_killer", "_instigator", "_useEffects"];
 
-			if((side _killer) != west) exitWith {};
-
 			// Don't just check side, as ACE will set uncon units as CIV
 			if((typeOf _unit) in LND_shoot_opf) then {
+				if(LND_shoot_hostileAmmo == 0) then {					
+					_unit removeWeaponGlobal (primaryWeapon _unit);
+					_unit removeWeaponGlobal (handgunWeapon _unit);
+					{
+						_unit removeMagazineGlobal _x;
+					} forEach magazines _unit;
+				};
+
+				if((side _killer) != west) exitWith {};
+
+				if(LND_shoot_hostileAmmo == 2) then {
+					{
+						_unit removeMagazineGlobal _x;
+					} forEach magazines _unit;
+					{
+						for "_i" from 0 to ((1/(count allPlayers))*4)-1 do {
+							_unit addMagazineGlobal ((getArray (configFile >> "CfgWeapons" >> currentWeapon _x >> "magazines")) select 0);
+						};
+					} forEach allPlayers;
+				};
+				
 				LND_shoot_score = LND_shoot_score + HOSTILE_KILLED_SCORE;
 				(format ["Hostile neutralised!\n\n+%1 points!\n\nCurrent score: %2", HOSTILE_KILLED_SCORE, LND_shoot_score]) remoteExec ["hint"];
 			}
 			else{
+				_unit removeWeaponGlobal (primaryWeapon _unit);
+				_unit removeWeaponGlobal (handgunWeapon _unit);
+				{
+					_unit removeMagazineGlobal _x;
+				} forEach magazines _unit;
+
+				if((side _killer) != west) exitWith {};
+
 				LND_shoot_score = LND_shoot_score + FRIENDLY_KILLED_PERNALTY;
 				(format ["Friendly unit killed!\n\n%1 points!\n\nCurrent score: %2", FRIENDLY_KILLED_PERNALTY, LND_shoot_score]) remoteExec ["hint"];
 			};

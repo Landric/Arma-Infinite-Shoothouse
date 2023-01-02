@@ -108,6 +108,14 @@ class Params
 		default = 1;
 	};
 
+	class HostileAmmo
+	{
+		title = "Hostiles drop:";
+		texts[] = {"No ammo or weapon", "Own ammo", "Player ammo"};
+		values[] = {0, 1, 2};
+		default = 1;
+	};
+
 	class OPF
 	{
 		title = "Hostiles";

@@ -10,10 +10,12 @@ LND_shoot_minUnits = ["MinUnits", 1] call BIS_fnc_getParamValue;
 LND_shoot_maxUnits = ["MaxUnits", 4] call BIS_fnc_getParamValue;
 LND_shoot_emptyRooms = 0; // For tracking number of empty rooms in a row
 
+LND_shoot_hostileAmmo = ["HostileAmmo", 1] call BIS_fnc_getParamValue;
+
 LND_shoot_spawnHostages = (["Hostages", 1] call BIS_fnc_getParamValue) > 0;
 LND_shoot_spawnBLUFOR = (["BLUF", 0] call BIS_fnc_getParamValue) > 0;
 
-LND_shoot_rooms = createHashMap;
+LND_shoot_rooms = createHashMap; // Store data about created rooms (e.g., existence, objects, etc.)
 
 LND_shoot_score = 0;
 
